@@ -52,11 +52,50 @@ async function downloadAudio() {
     return;
   }
 
-  // Ask browser to capture audio
+  alert(
+    "IMPORTANT:\n\n" +
+    "1. Chrome will ask what to share\n" +
+    "2. Select THIS TAB\n" +
+    "3. ENABLE 'Share tab audio'\n\n" +
+    "Otherwise audio will be silent."
+  );
+
+  // Capture tab audio
   const stream = await navigator.mediaDevices.getDisplayMedia({
-    audio: true,
-    video: false
+    video: true,
+    audio: true
   });
+
+  const mediaRecorder = new MediaRecorder(stream);
+  const chunks = [];
+
+  mediaRecorder.ondataavailable = e => chunks.push(e.data);
+
+  mediaRecorder.onstop = () => {
+    const blob = new Blob(chunks, { type: "audio/wav" });
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "tts-audio.wav";
+    a.click();
+
+    // Stop screen capture
+    stream.getTracks().forEach(track => track.stop());
+  };
+
+  mediaRecorder.start();
+
+  // Speak text
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.voice = voices[voiceIndex];
+
+  utterance.onend = () => {
+    mediaRecorder.stop();
+  };
+
+  speechSynthesis.speak(utterance);
+}
 
   mediaRecorder = new MediaRecorder(stream);
   audioChunks = [];
