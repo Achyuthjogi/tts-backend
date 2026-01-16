@@ -27,7 +27,7 @@ function speakText() {
     speechSynthesis.speak(utterance);
 
     // send usage data to backend
-    fetch("http://localhost:8080/api/log", {
+    fetch("https://tts-backend-k1ec.onrender.com", {
         method: "POST",
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify({ text })
