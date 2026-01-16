@@ -1,21 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Free Text to Speech</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <title>TTS Studio</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-<div class="container">
-    <h1>🎤 Free Text to Speech</h1>
+<header class="navbar">
+  <h2>TTS Studio</h2>
+  <span class="badge">Free</span>
+</header>
 
-    <textarea id="text" placeholder="Enter text here..."></textarea>
+<main class="app">
+  <div class="card">
+    <h1>Text to Speech</h1>
+    <p class="subtitle">Generate natural voice & download audio</p>
 
+    <label>Text</label>
+    <textarea id="text" placeholder="Type your text here..."></textarea>
+
+    <label>Voice</label>
     <select id="voiceSelect"></select>
 
-    <button onclick="speakText()">Speak</button>
-</div>
+    <div class="actions">
+      <button class="primary" onclick="speak()">▶ Play</button>
+      <button class="secondary" onclick="downloadAudio()">⬇ Download MP3</button>
+    </div>
+  </div>
+</main>
+
+<footer>
+  © 2026 TTS Studio · Built with ❤️
+</footer>
 
 <script src="script.js"></script>
 </body>
